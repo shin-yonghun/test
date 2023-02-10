@@ -1,0 +1,39 @@
+application:
+  timezone: Asia/Seoul
+  locale: ko
+
+server:
+  servlet:
+    context-path: /
+    jsp:
+      init-parameters:
+        listings: false
+  port: 8080
+  error:
+    include-exception: true
+    include-stacktrace: always
+    whitelabel:
+      enabled: false
+    path: /error
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 200
+    connection-timeout: 3000
+    mbeanregistry:
+      enabled: true
+
+spring:
+  application:
+    name: test
+  web:
+    locale: ko_KR
+  messages:
+    basename: messages/messages
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
+
+debug: false
