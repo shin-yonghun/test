@@ -32,20 +32,27 @@ public class TestServiceImpl implements TestService {
             // NESTED : 부모 트랜잭션이 커밋될 때 같이 커밋, 자식 트랜잭션의 롤백은 부모 트랜잭션에 영향 없음
     public void transactionalTest() {
         Student student = studentRepository.findById(1L).get();
-        trans1(student);
-
+        try{
+            //trans1(student);
+            trans2(student);
+            student.setGender(2);
+            studentRepository.save(student);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Transactional(propagation = Propagation.NESTED)
     public void trans1(Student student){
         student.setAge(18);
-        trans2(student);
         studentRepository.save(student);
+        throw new RuntimeException();
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    private void trans2(Student student){
+    public void trans2(Student student){
         student.setAge(17);
         studentRepository.save(student);
+        throw new RuntimeException();
     }
 }
